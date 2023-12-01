@@ -23,7 +23,6 @@ function addCard(name, link) {
 // @todo: Функция удаления карточки
 function delCard(event) {
     const card = event.target.closest('.places__item');
-    //placeList.remove(cardElement);
     card.remove();
 }
 
