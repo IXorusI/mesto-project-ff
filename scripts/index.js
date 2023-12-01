@@ -28,6 +28,4 @@ function delCard(event) {
 }
 
 // @todo: Вывести карточки на страницу
-for (i = 0; i<places.length; i++) {
-    addCard(places[i].name, places[i].link)
-}
+places.forEach((item) => addCard(item.name, item.link))
