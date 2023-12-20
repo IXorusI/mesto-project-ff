@@ -1,25 +1,9 @@
 import './styles/index.css'
-
 const content = document.querySelector('.content');
 const placesSection = content.querySelector('.places');
 const placeList = placesSection.querySelector('.places__list');
 const places = Array.from(initialCards);
-
-
 const profileTemplate = document.querySelector('#card-template').content;
-
-// function createCard(name, link) {
-//     const cardElement = profileTemplate.querySelector('.places__item').cloneNode(true);
-//     const delButton = cardElement.querySelector('.card__delete-button');
-
-//     cardElement.querySelector('.card__title').textContent = name;
-//     cardElement.querySelector('.card__image').src = link;
-//     cardElement.querySelector('.card__image').alt = `Фото ${name}`;
-
-//     delButton.addEventListener('click', handleDeleteCard);
-    
-//     placeList.append(cardElement);
-// }
 
 function createCard(card, callback) {
     const cardElement = profileTemplate.querySelector('.places__item').cloneNode(true);
