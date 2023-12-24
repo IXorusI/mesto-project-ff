@@ -1,6 +1,6 @@
 import './styles/index.css'
 import {initialCards} from './cards.js'
-import {createCard} from './components/card.js'
+import {createCard, deleteCard} from './components/card.js'
 const content = document.querySelector('.content');
 const placesSection = content.querySelector('.places');
 const placeList = placesSection.querySelector('.places__list');
