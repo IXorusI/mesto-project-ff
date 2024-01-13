@@ -1,4 +1,4 @@
-import { cardTemplate, openpopupImage } from '../index.js';
+import {cardTemplate, openpopupImage} from '../index.js';
 const profileTemplate = document.querySelector('#card-template').content;
 
 function createCard(card, callback) {
