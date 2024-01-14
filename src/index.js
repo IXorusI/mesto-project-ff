@@ -1,7 +1,7 @@
 import './styles/index.css'
 import {initialCards} from './cards.js'
-import {createCard, deleteCard} from './components/card.js'
-import {showPopup, closePopup} from './components/modal.js';
+import {createCard, deleteCard, likeToggle} from './components/card.js'
+import {openModal, closeModal} from './components/modal.js';
 const content = document.querySelector('.content');
 const placesSection = content.querySelector('.places');
 const placeList = placesSection.querySelector('.places__list');
@@ -11,7 +11,9 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupNewCard = document.querySelector('.popup_type_new-card');
-const popupImage = document.querySelector('.popup_type_image');
+const popupTypeImage = document.querySelector('.popup_type_image');
+const popupImage = popupTypeImage.querySelector('.popup__image');
+const popupImageСaption = popupTypeImage.querySelector('.popup__caption');
 const formElement = document.querySelector('.popup__form')
 const addCard = document.querySelector('.popup_type_new-card');
 const nameInput = document.querySelector('.popup__input_type_name');
@@ -25,17 +27,13 @@ function handleFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
+    closeModal(popupEdit);
 }
 formElement.addEventListener('submit', handleFormSubmit); 
 
 // Блок предзагруженных карточек
-function handleDeleteCard(event) {
-    const card = event.target.closest('.places__item');
-    card.remove();
-}
-
 function renderCard (item) {
-    placeList.prepend(createCard(item, handleDeleteCard));
+    placeList.prepend(createCard(item, deleteCard, likeToggle, clickImage));
 }
 
 places.forEach((item) => renderCard(item))
@@ -43,12 +41,20 @@ places.forEach((item) => renderCard(item))
 
 //Блок обработки кнопок
 profileAddButton.addEventListener('click', () => {
-    showPopup(popupNewCard);
+    openModal(popupNewCard);
 })
 
 profileEditButton.addEventListener('click', () => {
-    showPopup(popupEdit);
+    openModal(popupEdit);
 });
+
+function clickImage(evt){
+    popupImage.src = evt.target.src;
+    popupImage.alt = evt.target.alt;
+    popupImageСaption.textContent = evt.target.alt;
+    openModal(popupTypeImage);
+};
+
 
 
 // Добавление новой карточки
@@ -62,7 +68,7 @@ function addNewCardSubmit(evt) {
         link: nameNewLink
     }
     
-    renderCard (card);
-    closePopup (addCard);
+    renderCard(card);
+    closeModal(addCard);
 }
 addCard.addEventListener('submit', addNewCardSubmit); 

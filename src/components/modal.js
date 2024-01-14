@@ -1,4 +1,5 @@
-function showPopup(popup) {
+
+function openModal(popup) {
     const closeButton = popup.querySelector('.popup__close');
     popup.classList.add('popup_is-opened');
     closeButton.addEventListener('click', сloseButtonClick);
@@ -6,7 +7,7 @@ function showPopup(popup) {
     document.addEventListener('mousedown', mouseClick);
 }
   
-function closePopup(popup) {
+function closeModal(popup) {
     const closeButton = popup.querySelector('.popup__close');
     popup.classList.remove('popup_is-opened');
     closeButton.removeEventListener('click', сloseButtonClick);
@@ -17,21 +18,23 @@ function closePopup(popup) {
 function сloseButtonClick() {
     const openedPopup = document.querySelector('.popup_is-opened');
     if (openedPopup) {
-        closePopup(openedPopup);
+        closeModal(openedPopup);
     }
 }
 
 function keyEsc(evt) {
     if (evt.key === 'Escape') {
         const popup = document.querySelector('.popup_is-opened');
-        closePopup(popup);
+        closeModal(popup);
     }
 }
   
 function mouseClick(evt) {
     if (evt.target.classList.contains('popup_is-opened')) {
-        closePopup(evt.target);
+        closeModal(evt.target);
     }
 }
-  
-export {showPopup, closePopup};
+
+
+
+export {openModal, closeModal};
