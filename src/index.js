@@ -2,6 +2,8 @@ import './styles/index.css'
 import {initialCards} from './cards.js'
 import {createCard, deleteCard, likeToggle} from './components/card.js'
 import {openModal, closeModal} from './components/modal.js';
+import {enableValidation, clearValidation} from './components/validation.js';
+
 const content = document.querySelector('.content');
 const placesSection = content.querySelector('.places');
 const placeList = placesSection.querySelector('.places__list');
@@ -24,6 +26,17 @@ const profileImage = document.querySelector('.profile__image');
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const popupCloseButtons = document.querySelector('.popup__close');
+const formClass = document.forms['edit-profile'];
+const formCard = document.forms['new-place'];
+
+const enableValidationList = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input_type_error_active'
+};
 
 function submitEditProfileForm(evt) {
     evt.preventDefault();
@@ -41,12 +54,14 @@ places.forEach((item) => renderCard(item))
 
 //Блок обработки кнопок
 profileAddButton.addEventListener('click', () => {
+    clearValidation(formCard, enableValidationList);
     openModal(popupNewCard);
 })
 
 profileEditButton.addEventListener('click', () => {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
+    clearValidation(formClass ,enableValidationList)
     openModal(popupEdit);
 });
 
@@ -72,3 +87,8 @@ function addNewCardSubmit(evt) {
     formAddCard.reset();
 }
 popupAddCard.addEventListener('submit', addNewCardSubmit); 
+enableValidation(enableValidationList)
+
+// Promise.all(getUserInfo, getCardsInfo) {
+
+// }

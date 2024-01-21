@@ -29,7 +29,7 @@
   </main>
   <footer class="footer page__section">
     <p class="footer__copyright">
-      © 2021 Mesto Russia
+      © 2024 Mesto Russia
     </p>
   </footer>
   <div class="popup popup_type_edit popup_is-animated">
@@ -37,8 +37,30 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" name="edit-profile" novalidate>
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
+        <input 
+          type="text" 
+          id="name-input"
+          name="name" 
+          class="popup__input popup__input_type_name" 
+          placeholder="Имя" 
+          minlength="2"
+          maxlength="40"
+          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+          data-error-message="Поле может содержать только латинские и кириллические буквы, знаки дефиса и пробелы"
+          required>
+        <span class="name-input-error popup__input_type_error">Необходимо заполнить данное поле</span>
+        <input 
+          type="text" 
+          id="description-input"
+          name="description" 
+          class="popup__input popup__input_type_description" 
+          placeholder="Занятие" 
+          minlength="2"
+          maxlength="200"
+          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+          data-error-message="Поле может содержать только латинские и кириллические буквы, знаки дефиса и пробелы"
+          required>
+        <span class="description-input-error popup__input_type_error">Необходимо заполнить данное поле</span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -48,8 +70,26 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="new-place" novalidate>
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <input 
+          type="text" 
+          id="place-name-input"
+          name="place-name" 
+          class="popup__input popup__input_type_card-name" 
+          placeholder="Название" 
+          minlength="2"
+          maxlength="30"
+          pattern="[a-zA-Zа-яА-ЯёЁ\s\-]+"
+          data-error-message="Поле может содержать только латинские и кириллические буквы, знаки дефиса и пробелы"
+          required>
+        <span class="place-name-input-error popup__input_type_error">Необходимо заполнить данное поле</span>
+        <input 
+          type="url" 
+          id="link-input"
+          name="link" 
+          class="popup__input popup__input_type_url" 
+          placeholder="Ссылка на картинку" 
+          required>
+        <span class="link-input-error popup__input_type_error">Необходимо заполнить данное поле</span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -62,8 +102,6 @@
     </div>
   </div>
 </div>
-<!-- <script src="./scripts/cards.js"></script>
-<script src="./scripts/index.js" defer></script> -->
 
 <template id="card-template">
   <li class="places__item card">

@@ -1,4 +1,3 @@
-
 function openModal(popup) {
     const closeButton = popup.querySelector('.popup__close');
     popup.classList.add('popup_is-opened');
