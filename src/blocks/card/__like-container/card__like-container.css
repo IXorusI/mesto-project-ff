@@ -1,0 +1,15 @@
+.card__like-container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 3px;
+}
+
+.card__like-count {
+    line-height: normal;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

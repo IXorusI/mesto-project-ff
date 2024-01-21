@@ -14,18 +14,108 @@ const checkStatus = (res) => {
     }
 }
 
-export const getUserInfo => {
-    return fetch(`${prop.baseUrl}/users/me`, {
-        method: 'POST',
+const getUserInfo = () => {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'GET',
         headers: config.headers
     })
     .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+    
 }
 
-export const getCardsInfo => {
-    return fetch(`${prop.baseUrl}/cards `, {
-        method: 'POST',
+const getCardsInfo = () => {
+    return fetch(`${config.baseUrl}/cards`, {
+        method: 'GET',
         headers: config.headers
     })
     .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
 }
+
+const baseInfo = () => {
+    return Promise.all([getUserInfo(), getCardsInfo()])
+}
+
+const setUserInfo = (name, about) => {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: name,
+            about: about
+        })
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+const addCard = (card) => {
+    return fetch(`${config.baseUrl}/cards`, {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: card.name,
+            link: card.link
+        })
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+const deleteCards = (cardID) => {
+    return fetch(`${config.baseUrl}/cards/${cardID}`, {
+        method: 'DELETE',
+        headers: config.headers
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+const addLike = (cardID) => {
+    return fetch(`${config.baseUrl}/cards/likes/${cardID}`, {
+        method: 'PUT',
+        headers: config.headers
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+const removeLike = (cardID) => {
+    return fetch(`${config.baseUrl}/cards/likes/${cardID}`, {
+        method: 'DELETE',
+        headers: config.headers
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+const updateAvatar = (avatarUrl) => {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({
+            avatar: avatarUrl,
+        })
+    })
+    .then(res => checkStatus(res))
+    .catch((err) => {
+        console.log(err);
+    })
+}
+
+export {getUserInfo, getCardsInfo, baseInfo, setUserInfo, addCard, deleteCards, addLike, removeLike, updateAvatar}
