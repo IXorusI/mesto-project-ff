@@ -10,7 +10,6 @@ const placeList = placesSection.querySelector('.places__list');
 const profileAddButton = document.querySelector('.profile__add-button');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
-const popupButton = document.querySelector('.popup__button')
 const popupEditAvatar = document.querySelector('.popup_type_update_avatar');
 const popupTypeImage = document.querySelector('.popup_type_image');
 const popupImage = popupTypeImage.querySelector('.popup__image');
@@ -69,9 +68,9 @@ function editeAvatar(evt) {
     changeButtonText(buttonFormAvatar)
  
     updateAvatar(newAvatar)
-        .then((res) => {
+        .then(() => {
             changeButtonText(buttonFormAvatar)
-            profileImage.src = res.avatar
+            profileImage.style.backgroundImage = `url('${newAvatar}')`;
             closeModal(popupEditAvatar)
         })
         .catch((err) => {
