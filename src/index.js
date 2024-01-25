@@ -1,5 +1,5 @@
 import './styles/index.css'
-import {createCard} from './components/card.js'
+import {createCard, deleteCard, likeCard} from './components/card.js'
 import {openModal, closeModal} from './components/modal.js';
 import {enableValidation, clearValidation} from './components/validation.js';
 import {baseInfo, setUserInfo, addCard, updateAvatar} from './components/api.js';
@@ -12,7 +12,6 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupButton = document.querySelector('.popup__button')
 const popupEditAvatar = document.querySelector('.popup_type_update_avatar');
-const popupNewCard = document.querySelector('.popup_type_new-card');
 const popupTypeImage = document.querySelector('.popup_type_image');
 const popupImage = popupTypeImage.querySelector('.popup__image');
 const popupImageСaption = popupTypeImage.querySelector('.popup__caption');
@@ -28,6 +27,10 @@ const profileDescription = document.querySelector('.profile__description');
 const formClass = document.forms['edit-profile'];
 const formCard = document.forms['new-place'];
 const formAvatar = document.forms['update-avatar'];
+const buttonFormProfile = formClass.querySelector('.popup__button');
+const buttonFormCard = formCard.querySelector('.popup__button');
+const buttonFormAvatar = formAvatar.querySelector('.popup__button');
+const newProfileAvatarUrl = formAvatar.querySelector('.popup__input_type_url');
 const userID = {_id:''};
 
 const enableValidationList = {
@@ -35,7 +38,7 @@ const enableValidationList = {
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
+    inputErrorClass: 'popup__input_error',
     errorClass: 'popup__input_type_error_active'
 };
 
@@ -43,43 +46,51 @@ function submitEditProfileForm(evt) {
     evt.preventDefault();
     const newProfileTitle = nameInput.value;
     const newProfileDescription = jobInput.value;
+    changeButtonText(buttonFormProfile)
 
     setUserInfo(newProfileTitle, newProfileDescription)
         .then((res) => {
             profileTitle.textContent = res.name;
             profileDescription.textContent = res.about;
+            changeButtonText(buttonFormProfile)
+            closeModal(popupEdit);
         })
         .catch((err) => {
+            changeButtonText(buttonFormProfile)
             console.log(err);
         })
-    closeModal(popupEdit);
+        .finally(() => changeButtonText(buttonFormAvatar))
 }
 formEditProfile.addEventListener('submit', submitEditProfileForm); 
 
 function editeAvatar(evt) {
     evt.preventDefault();
-    const newProfileAvatarUrl = formAvatar.querySelector('.popup__input_type_url').value
+    const newAvatar = newProfileAvatarUrl.value
+    changeButtonText(buttonFormAvatar)
  
-    updateAvatar(newProfileAvatarUrl)
+    updateAvatar(newAvatar)
         .then((res) => {
+            changeButtonText(buttonFormAvatar)
             profileImage.src = res.avatar
             closeModal(popupEditAvatar)
         })
         .catch((err) => {
+            changeButtonText(buttonFormAvatar)
             console.log(err);
         })
+        .finally(() => changeButtonText(buttonFormAvatar))
     formAvatar.reset()
 }
 formAvatar.addEventListener('submit', editeAvatar)
 
 function renderCard (item, user) {
-    placeList.prepend(createCard(item, clickImage, user));
+    placeList.prepend(createCard(item, clickImage, user, deleteCard, likeCard));
 }
 
 //Блок обработки кнопок
 profileAddButton.addEventListener('click', () => {
     clearValidation(formCard, enableValidationList);
-    openModal(popupNewCard);
+    openModal(popupAddCard);
 })
 
 profileEditButton.addEventListener('click', () => {
@@ -90,10 +101,6 @@ profileEditButton.addEventListener('click', () => {
 });
 
 profileImage.addEventListener('click', () => openModal(popupEditAvatar));
-
-popupButton.addEventListener('click', () => {
-    changeButtonText(popupButton);
-});
 
 function changeButtonText(button) {
     switch (button.textContent) {
@@ -117,6 +124,7 @@ function clickImage(evt){
 // Добавление новой карточки
 function addNewCardSubmit(evt) {
     evt.preventDefault();
+    changeButtonText(buttonFormCard)
     const nameNewCard = newCardName.value;
     const nameNewLink = newCardLink.value;
     const card = {
@@ -125,7 +133,15 @@ function addNewCardSubmit(evt) {
     }
 
     addCard(card)
-    closeModal(popupAddCard);
+        .then((card) =>{
+            renderCard(card, userID);
+            changeButtonText(buttonFormCard)
+            closeModal(popupAddCard);
+        })
+        .catch((err) => {
+            changeButtonText(buttonFormCard)
+            console.log(err);})
+        .finally(() => changeButtonText(buttonFormCard))
     formCard.reset();
 }
 
@@ -135,7 +151,7 @@ baseInfo()
         profileTitle.textContent = user.name;
         profileDescription.textContent = user.about;
         profileImage.style.backgroundImage = `url(${user.avatar})`;
-        cards.forEach((item) => renderCard(item, user))
+        cards.reverse().forEach((item) => renderCard(item, user))
     })
     .catch((err) => {
         console.log(err);
@@ -143,17 +159,3 @@ baseInfo()
 
 popupAddCard.addEventListener('submit', addNewCardSubmit); 
 enableValidation(enableValidationList)
-
-
-
-//ТЕСТ зона
-// function see() {
-//     // console.log(getUserInfo())
-//     // console.log(getCardsInfo())
-//     console.log(baseInfo())
-// }
-// //setUserInfo('Alex', 'Test')
-// //updateAvatar('https://s0.rbk.ru/v6_top_pics/resized/960xH/media/img/5/46/756038770746465.jpg')
-
-
-// see()

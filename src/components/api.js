@@ -19,11 +19,7 @@ const getUserInfo = () => {
         method: 'GET',
         headers: config.headers
     })
-    .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
-    
+    .then(res => checkStatus(res))   
 }
 
 const getCardsInfo = () => {
@@ -32,9 +28,6 @@ const getCardsInfo = () => {
         headers: config.headers
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const baseInfo = () => {
@@ -51,9 +44,6 @@ const setUserInfo = (name, about) => {
         })
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const addCard = (card) => {
@@ -66,9 +56,6 @@ const addCard = (card) => {
         })
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const deleteCards = (cardID) => {
@@ -77,9 +64,6 @@ const deleteCards = (cardID) => {
         headers: config.headers
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const addLike = (cardID) => {
@@ -88,9 +72,6 @@ const addLike = (cardID) => {
         headers: config.headers
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const removeLike = (cardID) => {
@@ -99,9 +80,6 @@ const removeLike = (cardID) => {
         headers: config.headers
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 const updateAvatar = (avatarUrl) => {
@@ -113,9 +91,6 @@ const updateAvatar = (avatarUrl) => {
         })
     })
     .then(res => checkStatus(res))
-    .catch((err) => {
-        console.log(err);
-    })
 }
 
 export {getUserInfo, getCardsInfo, baseInfo, setUserInfo, addCard, deleteCards, addLike, removeLike, updateAvatar}
