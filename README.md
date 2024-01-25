@@ -1,3 +1,3 @@
 # Проектная работа Mesto
-https://github.com/IXorusI/mesto-project-ff.git
-https://ixorusi.github.io/mesto-project-ff/
+1. https://github.com/IXorusI/mesto-project-ff.git  
+2. https://ixorusi.github.io/mesto-project-ff/
