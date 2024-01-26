@@ -45,6 +45,8 @@ function likeCard(evt, likeButton, card, text){
                 text.textContent = data.likes.length
                 likeButton.classList.add('card__like-button_is-active');
             })
+            .catch((err) => console.log(err));
+
     } else {
         removeLike(card._id)
             .then(data => {
@@ -52,6 +54,7 @@ function likeCard(evt, likeButton, card, text){
                 text.textContent = data.likes.length
                 likeButton.classList.remove('card__like-button_is-active');
             })
+            .catch((err) => console.log(err));
     }
 }
 
@@ -60,9 +63,7 @@ function deleteCard(evt, cardID){
         .then(() => {
             evt.target.closest(".card").remove();
         })
-        .catch((err) => {
-            console.log(err);
-    });
+        .catch((err) => console.log(err));
 }
 
 function getCardTemplate(){

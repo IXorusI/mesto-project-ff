@@ -51,14 +51,12 @@ function submitEditProfileForm(evt) {
         .then((res) => {
             profileTitle.textContent = res.name;
             profileDescription.textContent = res.about;
-            changeButtonText(buttonFormProfile)
             closeModal(popupEdit);
         })
         .catch((err) => {
-            changeButtonText(buttonFormProfile)
             console.log(err);
         })
-        .finally(() => changeButtonText(buttonFormAvatar))
+        .finally(() => changeButtonText(buttonFormProfile))
 }
 formEditProfile.addEventListener('submit', submitEditProfileForm); 
 
@@ -69,16 +67,14 @@ function editeAvatar(evt) {
  
     updateAvatar(newAvatar)
         .then(() => {
-            changeButtonText(buttonFormAvatar)
             profileImage.style.backgroundImage = `url('${newAvatar}')`;
             closeModal(popupEditAvatar)
+            formAvatar.reset()
         })
         .catch((err) => {
-            changeButtonText(buttonFormAvatar)
             console.log(err);
         })
         .finally(() => changeButtonText(buttonFormAvatar))
-    formAvatar.reset()
 }
 formAvatar.addEventListener('submit', editeAvatar)
 
@@ -134,14 +130,12 @@ function addNewCardSubmit(evt) {
     addCard(card)
         .then((card) =>{
             renderCard(card, userID);
-            changeButtonText(buttonFormCard)
             closeModal(popupAddCard);
+            formCard.reset();
         })
         .catch((err) => {
-            changeButtonText(buttonFormCard)
             console.log(err);})
         .finally(() => changeButtonText(buttonFormCard))
-    formCard.reset();
 }
 
 baseInfo()
